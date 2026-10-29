@@ -1,0 +1,41 @@
+Project pspace {
+  database_type: 'PostgreSQL'
+  Note: 'database/table.sql 기준 테이블 구조'
+}
+
+Table room {
+  room_id int [pk, increment, not null]
+  room_name varchar(100) [not null]
+  room_type varchar(10) [not null, note: 'CODE, DOC, DRIVE 중 하나']
+  created_at timestamp [not null, default: `current_timestamp`]
+
+  checks {
+    `room_type in ('CODE', 'DOC', 'DRIVE')`
+  }
+}
+
+Table content {
+  content_id int [pk, increment, not null]
+  room_id int [not null]
+  parent_id int [note: '상위 content. NULL이면 최상위 항목']
+  content_name varchar(200) [not null, default: '']
+  content_type varchar(10) [not null, note: 'FILE, FOLDER 중 하나']
+  mime_type varchar(100)
+  storage_path text
+  created_at timestamp [default: `current_timestamp`]
+
+  checks {
+    `content_type in ('FILE', 'FOLDER')`
+  }
+}
+
+Table content_data {
+  content_id int [not null]
+  body text [not null, default: '']
+
+  Note: '원본 SQL에 기본 키와 UNIQUE 제약이 없어 동일 content_id로 여러 행을 저장할 수 있음'
+}
+
+Ref fk_content_romm: content.room_id > room.room_id [delete: cascade]
+Ref fk_content_parent: content.parent_id > content.content_id
+Ref fk_content_data: content_data.content_id > content.content_id [delete: cascade]

@@ -31,25 +31,29 @@ spring+react+postgresql
 홈화면(룸선택) -> 방들어가기 -> room화면보유주기 -> 내용수정후 저장
 
 db table
-user 
+<!-- user 
 - id(pk)
 - password
 - name
 - status
-- joined_at
+- joined_at -->
 
+//
 room
-- id(pk)
-- name(notnull)
-- type(notnull)
-- writer(fk)
+- room_id(int) 
+- room_name(varchar)
+- room_type(notnull)
 - created_at
 
 content 
+- content_id(String)
 - room_id(fk)
+- content_name
+- writed_at
+
+content-data 
 - content_id(pk)
--
-- writed_axt
+- body
 
 
 구성도 
@@ -59,6 +63,7 @@ backend
  - dao
  - dto
  - service
+ - domain 
 frontend
 
 database

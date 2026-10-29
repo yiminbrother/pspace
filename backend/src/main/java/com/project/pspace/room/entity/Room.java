@@ -10,11 +10,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor 
 @NoArgsConstructor 
 public class Room {
-    private long id;
-    private String password;
-    private String name;
-    private String userId;
-    private boolean status;
+
+    // 방번호
+    private int roomId;
+    // 방이름
+    private String roomName;
+    // 방타입(CODE, DOC, DRIVE)
+    private String roomType;
+    // 생설일자
     private Date createAt;
     
 }

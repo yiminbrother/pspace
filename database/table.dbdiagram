@@ -1,0 +1,34 @@
+{
+  "version": "2.0.0",
+  "darkMode": true,
+  "gridEnabling": false,
+  "currentViewName": null,
+  "defaultView": {
+    "detailLevel": "All",
+    "relationshipMode": "All",
+    "tablePositions": [
+      {
+        "name": "room",
+        "schemaName": "public",
+        "x": 12,
+        "y": 32
+      },
+      {
+        "name": "content",
+        "schemaName": "public",
+        "x": 441.60856572690227,
+        "y": -25.291097146739133
+      },
+      {
+        "name": "content_data",
+        "schemaName": "public",
+        "x": 1051.072265625,
+        "y": 32
+      }
+    ],
+    "tableGroupCollapseStates": [],
+    "stickyNoteLayouts": [],
+    "referencePaths": []
+  },
+  "views": {}
+}

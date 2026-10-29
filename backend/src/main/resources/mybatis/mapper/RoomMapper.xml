@@ -3,32 +3,32 @@
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.project.pspace.room.dao.RoomDao">
     <insert id="createRoom" parameterType="room">
-        INSERT INTO room(title, room_type)
-        VALUES (#{title},#{roomType});
+        INSERT INTO room(room_name, room_type)
+        VALUES (#{roomName},#{roomType});
     </insert>
 
     <update id="updateRoom" parameterType="room">
         UPDATE room
-        SET title = #{title},
+        SET room_name = #{roomName},
             created_at = CURRENT_TIMESTAMP
         WHERE room_id = #{roomId}
     </update>
-    <delete id="del" parameterType="_long">
+    <delete id="deleteRoom" parameterType="_int">
         DELETE
         FROM room
         WHERE room_id = #{roomId}
     </delete>
 
-    <select id="selectRoomById" parameterType="_long">
-        SELECT room_id, title, room_type,  create_at
+    <select id="selectRoomById" parameterType="_int">
+        SELECT room_id, room_name, room_type,  create_at
         FROM room 
-        where 
+        where room_id = #{roomId}
     </select>
     <sql id="searchCondition">
         <where>
             <if test="where != null">
-                <if test="where.title != null and where.title != ''">
-                    and name like concat('%', #{where.title},'%')
+                <if test="where.roomName != null and where.roomName != ''">
+                    and name like concat('%', #{where.roomName},'%')
                 </if>
                 <if test="where.roomType != null and where.roomType != ''">
                     and type = #{where.roomType}
@@ -43,7 +43,7 @@
     </select>
 
     <select id="selectRoomList">
-        SELECT room_id, title, room_type, created_at
+        SELECT room_id, room_name, room_type, created_at
         FROM room
         <include refid="searchCondition"></include>
         ORDER BY id ASC
