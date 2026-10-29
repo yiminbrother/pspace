@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.pspace.room.dao.RoomDao">
+    <insert id="createRoom" parameterType="room">
+        INSERT INTO room(title, room_type)
+        VALUES (#{title},#{roomType});
+    </insert>
+
+    <update id="updateRoom" parameterType="room">
+        UPDATE room
+        SET title = #{title},
+            created_at = CURRENT_TIMESTAMP
+        WHERE room_id = #{roomId}
+    </update>
+    <delete id="del" parameterType="_long">
+        DELETE
+        FROM room
+        WHERE room_id = #{roomId}
+    </delete>
+
+    <select id="selectRoomById" parameterType="_long">
+        SELECT room_id, title, room_type,  create_at
+        FROM room 
+        where 
+    </select>
+    <sql id="searchCondition">
+        <where>
+            <if test="where != null">
+                <if test="where.title != null and where.title != ''">
+                    and name like concat('%', #{where.title},'%')
+                </if>
+                <if test="where.roomType != null and where.roomType != ''">
+                    and type = #{where.roomType}
+                </if>
+            </if>
+        </where>
+    </sql>
+    <select id="countRooms">
+        SELECT COUNT(*)
+        FROM room
+        <include refid="searchCondition"></include>
+    </select>
+
+    <select id="selectRoomList">
+        SELECT room_id, title, room_type, created_at
+        FROM room
+        <include refid="searchCondition"></include>
+        ORDER BY id ASC
+        LIMIT #{pager.rowPerPage} 
+        OFFSET #{pager.startRowIndex}
+    </select>
+</mapper>
